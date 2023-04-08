@@ -1,0 +1,12 @@
+{
+	"development": {
+        "config_id": "development",
+        "app_name": "BP Recording Service",
+        "exposedPort": "30256"
+	},
+    "database": {
+         "name": "bp_data",
+         "collection": "db_record",
+         "connectionUrl": "mongodb://localhost:27017"
+    }
+}
