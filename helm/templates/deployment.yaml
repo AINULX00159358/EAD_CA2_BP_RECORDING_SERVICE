@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bp-recording-app
+  labels:
+    app: bprecording
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bprecording
+  template:
+    metadata:
+      labels:
+        app: bprecording
+    spec:
+      containers:
+        - image: eadca2/bprecordingservice:v1
+          name: bprecordingapp
+          ports:
+            - containerPort: 30256
+          env:
+            - name: MONGO_CONN_URI
+              value: "mongodb://mongodb-service:27017"

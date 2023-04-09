@@ -1,4 +1,5 @@
 node_modules/*
+bp_recording_service*.tgz
 package-lock.json
 .idea/*
 */cypress*
