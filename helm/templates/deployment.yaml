@@ -17,6 +17,7 @@ spec:
       containers:
         - image: ainhabacr.azurecr.io/eadca2/bprecordingservice:v1
           name: bprecordingapp
+          imagePullPolicy: Always
           ports:
             - containerPort: 30256
           env:
