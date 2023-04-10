@@ -15,7 +15,7 @@ spec:
         app: bprecording
     spec:
       containers:
-        - image: eadca2/bprecordingservice:v1
+        - image: ainhabacr.azurecr.io/eadca2/bprecordingservice:v1
           name: bprecordingapp
           ports:
             - containerPort: 30256
