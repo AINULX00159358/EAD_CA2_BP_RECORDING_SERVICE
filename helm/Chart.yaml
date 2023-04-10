@@ -1,5 +1,5 @@
 apiVersion: v2
-name: bp_recording_service
+name: bprecordingservice
 description: A Helm chart for Kubernetes, part of EAD CA2 2023
 
 # A chart can be either an 'application' or a 'library' chart.
