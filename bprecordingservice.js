@@ -52,6 +52,14 @@ app.post('/', (req, res) => {
                                 .then(result => res.json({'id': result.insertedId, 'ak':result.acknowledged }));
 });
 
-app.get('/', (req, res) => {
-  res.sendStatus(200).body(" NOT IMPLEMENTED");
+app.get('/health', (req, res) => {
+  collection.then(c=> c.stats()).then(r =>
+    res.status(200).json(r));
+});
+
+app.get('/count', (req, res) => {
+  collection.then(c=> c.stats()).then(r => {
+    console.log("record count "+ r.count);
+    res.status(200).json({count: r.count});
+  });
 });

@@ -1,0 +1,54 @@
+pool:
+  name: Azure Pipelines
+  demands: npm
+
+steps:
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      verbose: true
+    retryCountOnTaskFailure: 2
+
+  - task: DockerInstaller@0
+    displayName: 'Install Docker 17.09.0-ce'
+
+  - bash: |
+      echo 'running docker build'
+      docker run --name mongodb -p 27017:27017 -d --net=bridge mongo:latest
+    continueOnError: false
+    displayName: 'start Mongo Database'
+
+  - bash: |
+      MONGO_IP=`docker container inspect -f '{{ .NetworkSettings.IPAddress }}' mongodb`
+      echo 'got mongodb ip address $MONGO_IP '
+      echo 'running docker build'
+      docker build --no-cache --tag bprecordingservice:CA2_TEST_V1 $(Build.SourcesDirectory)
+      echo 'running docker image'
+      docker run --name bprecordingservice-test -p 30256:30256 -d -e "MONGO_CONN_URI=mongodb://$MONGO_IP:27017" bprecordingservice:CA2_TEST_V1
+    displayName: 'Start Application in Docker'
+    continueOnError: false
+
+  - bash: |
+      # Write your commands here
+      echo "Running Cypress Test"
+      ./node_modules/cypress/bin/cypress run --reporter junit --reporter-options "mochaFile=./cypress/results/TEST-bprecordingservice-Result.xml,toConsole=true"
+      echo "Printing Report and workingDir in  $(System.DefaultWorkingDirectory)"
+      cat ./cypress/results/TEST-bprecordingservice-Result.xml
+    displayName: 'Cypress Test'
+    continueOnError: true
+
+  - bash: |
+      # Write your commands here
+      docker stop bprecordingservice-test || true && docker rm bprecordingservice-test || true
+      docker stop mongodb || true && docker rm mongodb || true
+    displayName: 'kill running docker copy'
+    continueOnError: true
+    condition: always()
+
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results for EAD_CA2_BP_RECORDING_SERVICE'
+    inputs:
+      testResultsFiles: '**/TEST-*.xml'
+      failTaskOnFailedTests: true
+      testRunTitle: 'BP_RECORDING_SERVICE-E2E-TEST'
+

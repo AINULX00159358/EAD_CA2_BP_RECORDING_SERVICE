@@ -3,3 +3,4 @@ package-lock.json
 .idea/
 cypress.test.log
 /bp_recording_service*.tgz
+/cypress.log
