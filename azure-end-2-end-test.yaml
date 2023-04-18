@@ -29,7 +29,6 @@ steps:
     continueOnError: false
 
   - bash: |
-      # Write your commands here
       echo "Running Cypress Test"
       ./node_modules/cypress/bin/cypress run --reporter junit --reporter-options "mochaFile=./cypress/results/TEST-bprecordingservice-Result.xml,toConsole=true"
       echo "Printing Report and workingDir in  $(System.DefaultWorkingDirectory)"
