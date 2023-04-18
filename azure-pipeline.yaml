@@ -14,6 +14,8 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+name: RECORDING-SERVICE-BUILD
+
 variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'bc2aadcc-1517-44b8-9314-ea3f6c496a86'
