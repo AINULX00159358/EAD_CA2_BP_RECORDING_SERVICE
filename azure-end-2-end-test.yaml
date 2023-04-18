@@ -5,6 +5,14 @@ pool:
 trigger:
   - None
 
+name: RECORDING-SERVICE-TEST
+
+resources:
+  pipelines:
+    - pipeline: RECORDING-SERVICE # Name of the pipeline resource.
+      source: RECORDING-SERVICE # The name of the pipeline referenced by this pipeline resource
+      trigger: true # Run app-ci pipeline when any run of security-lib-ci completes
+
 steps:
   - task: Npm@1
     displayName: 'npm install'
