@@ -2,9 +2,6 @@ pool:
   name: Azure Pipelines
   demands: npm
 
-trigger:
-  - None
-
 variables:
   trivyVersion: 0.40.0
   ScanResultsPath: trivyScan
