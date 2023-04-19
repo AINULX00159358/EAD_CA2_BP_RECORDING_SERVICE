@@ -6,8 +6,6 @@ variables:
   trivyVersion: 0.40.0
   ScanResultsPath: trivyScan
 
-name: RECORDING-SERVICE-TEST
-
 steps:
   - task: Npm@1
     displayName: 'npm install'
