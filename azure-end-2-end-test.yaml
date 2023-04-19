@@ -5,6 +5,10 @@ pool:
 trigger:
   - None
 
+variables:
+  trivyVersion: 0.40.0
+  ScanResultsPath: trivyScan
+
 name: RECORDING-SERVICE-TEST
 
 resources:
@@ -39,6 +43,14 @@ steps:
     displayName: 'Start Application in Docker'
     continueOnError: false
 
+  - script: |
+       sudo apt-get install rpm
+        wget -q https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
+        sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
+        mkdir $(ScanResultsPath)
+        trivy image --scanners vuln,config,secret --severity CRITICAL,HIGH -o $(ScanResultsPath)/results.table bprecordingservice:CA2_TEST_V1
+    displayName: 'Scan using Trivy scan'
+
   - bash: |
       echo "Running Cypress Test"
       ./node_modules/cypress/bin/cypress run --reporter junit --reporter-options "mochaFile=./cypress/results/TEST-bprecordingservice-Result.xml,toConsole=true"
@@ -62,3 +74,6 @@ steps:
       failTaskOnFailedTests: true
       testRunTitle: 'BP_RECORDING_SERVICE-E2E-TEST'
 
+  - task: PublishHtmlReport@1
+    inputs:
+      reportDir: '$(ScanResultsPath)/results.table'
