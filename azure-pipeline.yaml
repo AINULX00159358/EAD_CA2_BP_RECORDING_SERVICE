@@ -15,6 +15,11 @@ pool:
   vmImage: ubuntu-latest
 
 
+resources:
+  pipelines:
+    - pipeline: RecordingServiceTest
+      source: Recording-Service-Test
+      trigger: true
 
 variables:
   # Container registry service connection established during pipeline creation
