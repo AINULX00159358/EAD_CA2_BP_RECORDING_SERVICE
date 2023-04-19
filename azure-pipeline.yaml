@@ -18,8 +18,8 @@ name: RECORDING-SERVICE-BUILD
 
 resources:
   pipelines:
-    - pipeline: RECORDING-SERVICE-TEST # Name of the pipeline resource.
-      source: RECORDING-SERVICE-TEST # The name of the pipeline referenced by this pipeline resource
+    - pipeline: RECORDING-SERVICE-BUILD-TEST # Name of the pipeline resource.
+      source: RECORDING-SERVICE-BUILD-TEST # The name of the pipeline referenced by this pipeline resource
       trigger: true # Run app-ci pipeline when any run of security-lib-ci completes
 
 variables:
