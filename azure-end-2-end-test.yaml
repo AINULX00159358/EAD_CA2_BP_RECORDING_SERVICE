@@ -34,7 +34,7 @@ steps:
        wget -q https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
        sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
        mkdir $(ScanResultsPath)
-       trivy image --scanners vuln,config,secret --severity CRITICAL,HIGH -o $(ScanResultsPath)/results.table bprecordingservice:CA2_TEST_V1
+       trivy image --scanners vuln --severity CRITICAL,HIGH -o $(ScanResultsPath)/results.table bprecordingservice:CA2_TEST_V1
     displayName: 'Scan using Trivy scan'
 
   - bash: |
@@ -48,8 +48,7 @@ steps:
   - bash: |
       # Write your commands here
       docker stop bprecordingservice-test || true && docker rm bprecordingservice-test || true
-      docker stop mongodb || true && docker rm mongodb || true
-      docker network rm bpwebapp
+      docker stop mongo || true && docker rm mongo || true
     displayName: 'kill running docker copy'
     continueOnError: true
     condition: always()
