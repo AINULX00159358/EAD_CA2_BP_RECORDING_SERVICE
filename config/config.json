@@ -1,12 +1,21 @@
 {
-	"development": {
-        "config_id": "development",
-        "app_name": "BP Recording Service",
-        "exposedPort": "30256"
-	},
+  "app_name": "BP Recording Service",
+  "development": {
+    "configID": "development",
+    "exposedPort": "30256",
     "database": {
-         "name": "bp_data",
-         "collection": "db_record",
-         "connectionUrl": "mongodb://localhost:27017"
+      "name": "bp_data",
+      "collection": "db_record",
+      "connectionUrl": "mongodb://zorok:indiaNopels@localhost:27017/?authMechanism=SCRAM-SHA-1"
     }
+  },
+  "production": {
+    "configID": "production",
+    "exposedPort": "30256",
+    "database": {
+      "name": "bp_data",
+      "collection": "db_record",
+      "connectionUrl": "mongodb://CREDENTIALS@mongodb-service:27017/?authMechanism=SCRAM-SHA-1"
+    }
+  }
 }

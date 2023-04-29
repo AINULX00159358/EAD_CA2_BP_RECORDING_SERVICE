@@ -18,14 +18,14 @@ steps:
 
   - bash: |
       docker network create bpwebapp
-      docker run --name mongo --rm -p 27017:27017 -d --net bpwebapp mongo:latest
+      docker run --name mongo --rm -p 27017:27017 -d --net bpwebapp -e "MONGO_INITDB_ROOT_USERNAME=zorok" -e "MONGO_INITDB_ROOT_PASSWORD=indiaNopels" mongo:latest
     continueOnError: false
     displayName: 'start Mongo Database'
 
   - bash: |
       docker build --no-cache --tag bprecordingservice:CA2_TEST_V1 $(Build.SourcesDirectory)
       echo 'running docker image'
-      docker run --name bprecordingservice-test -p 30256:30256 --net bpwebapp -d -e "MONGO_CONN_URI=mongodb://mongo:27017" bprecordingservice:CA2_TEST_V1
+      docker run --name bprecordingservice-test -p 30256:30256 --net bpwebapp -d -e "MONGO_CONN_URL=mongodb://zorok:indiaNopels@mongo:27017" bprecordingservice:CA2_TEST_V1
     displayName: 'Start Application in Docker'
     continueOnError: false
 

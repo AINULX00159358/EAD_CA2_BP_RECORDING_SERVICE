@@ -4,3 +4,4 @@ package-lock.json
 cypress.test.log
 /bp_recording_service*.tgz
 /cypress.log
+/cypress/screenshots/
